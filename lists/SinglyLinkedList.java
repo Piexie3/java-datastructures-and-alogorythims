@@ -288,10 +288,10 @@ public class SinglyLinkedList {
 
      public ListNode createALoopList(){
         ListNode first = new ListNode(1);
-        ListNode second = new ListNode(1);
-        ListNode third = new ListNode(1);
-        ListNode forth = new ListNode(1);
-        ListNode fifth = new ListNode(1);
+        ListNode second = new ListNode(4);
+        ListNode third = new ListNode(18);
+        ListNode forth = new ListNode(73);
+        ListNode fifth = new ListNode(5);
         head = first;
         first.next = second;
         second.next = third;
