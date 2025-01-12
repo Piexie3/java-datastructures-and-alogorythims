@@ -1,7 +1,5 @@
 package sum;
 
-import com.sun.source.doctree.SummaryTree;
-
 public class SumAlgo {
     public static void main(String[] args) {
     double now = System.currentTimeMillis();

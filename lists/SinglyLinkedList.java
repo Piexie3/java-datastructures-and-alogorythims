@@ -5,29 +5,24 @@ public class SinglyLinkedList {
 
     public static void main(String[] args) {
         SinglyLinkedList sll = new SinglyLinkedList();
-        sll.head = new ListNode(10);
-        ListNode second = new ListNode(1);
-        ListNode third = new ListNode(7);
-        ListNode fourth = new ListNode(11);
-
-        // connecting nodes
-        sll.head.next = second;
-        second.next = third;
-        third.next = fourth;
-
-        sll.printLinkedList();
-        int count = sll.sllLnength();
-        System.out.println("Sll length is: " + count);
-        sll.insertNodeAtHead(4);
-        sll.printLinkedList();
+        sll.insertAtTheEnd(2);
+        sll.insertAtTheEnd(2);
+        sll.insertAtTheEnd(5);
         sll.insertAtTheEnd(7);
+        sll.insertAtTheEnd(9);
+        sll.insertAtTheEnd(9);
+
+        sll.removeSortedDuplicate();
         sll.printLinkedList();
-        sll.insert(4, 10);
-        sll.insert(7, 6);
-        sll.insert(1, 5);
+        sll.addInASortedList(8);
         sll.printLinkedList();
-        System.out.println(sll.deleteFirstNode().data);
-        sll.printLinkedList();
+        sll.removeAValueInAListNode(5);
+        sll.printLinkedList(); 
+        System.out.println(sll.detectLoop(sll.head));
+        System.out.println(sll.detectLoop(sll.createALoopList()));
+       
+
+        
     }
 
     // singly linked list
@@ -207,4 +202,103 @@ public class SinglyLinkedList {
     }
 
     // how to remove duplicates from sorted linked list
+    /*
+     * Example
+     * head = 1 --> 1 --> 2 --> 4 --> 8 --> 8 --> 9 
+     * output = 1 --> 2 --> 4 --> 8 --> 9
+     */
+    public void removeSortedDuplicate(){
+        ListNode current = head;
+        while (current != null && current.next != null) {
+            if (current.data ==current.next.data) {
+                current.next = current.next.next;
+            }else{
+                current = current.next;
+            }
+        }
+
+    }
+
+    // adding a node in a sorded list
+    /*
+     * Example
+     * head = 1 --> 1 --> 2 --> 4 --> 8 --> 9 
+     * newNode = 6
+     * output =  1 --> 1 --> 2 --> 4 --> 6 --> 8 --> 9 
+     */
+    public void addInASortedList(int value){
+        ListNode newNode = new ListNode(value);
+        ListNode current = head;
+        ListNode temp = null;
+        while (current!=null && current.data < newNode.data) {
+            temp = current;
+            current = current.next;
+        }
+        newNode.next = current;
+        temp.next = newNode;
+    }
+
+    // how to remove a value
+    /*
+     * Example
+     * head = 2--> 5--> 7--> 8--> 9--> null
+     * value = 5
+     * Output = 2--> 7--> 8--> 9--> null
+     */
+    public ListNode removeAValueInAListNode(int value){
+        ListNode current = head;
+        ListNode temp = null;
+        while (current != null && current.data != value) {
+            temp= current;
+            current = current.next;
+        }
+        if (current == null) {
+            return null;
+        }
+        temp.next = current.next;
+        return head;
+
+    }
+
+
+    // how to detect a loop of a listnode
+    /*
+     * Example
+     * head = 2--> 7--> 8--> 9--> 4--> 18--> 8(in position 3)
+     * output = true
+     * 
+     * 
+     * Example 2
+     * head = 2--> 7--> 8--> 9--> null
+     * output = false
+     */
+
+     public boolean detectLoop(ListNode hd){
+        ListNode fastPointer = hd;
+        ListNode slowPointer = hd;
+        while (fastPointer!=null && fastPointer.next != null) {
+            fastPointer = fastPointer.next.next;
+            slowPointer = slowPointer.next;
+            if (slowPointer == fastPointer) {
+                return true;
+            }
+        }
+        return false;
+     }
+
+     public ListNode createALoopList(){
+        ListNode first = new ListNode(1);
+        ListNode second = new ListNode(1);
+        ListNode third = new ListNode(1);
+        ListNode forth = new ListNode(1);
+        ListNode fifth = new ListNode(1);
+        head = first;
+        first.next = second;
+        second.next = third;
+        third.next = forth;
+        forth.next = fifth;
+        fifth.next = third;
+        return head;
+     }
 }
+
