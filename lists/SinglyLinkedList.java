@@ -17,12 +17,12 @@ public class SinglyLinkedList {
         sll.addInASortedList(8);
         sll.printLinkedList();
         sll.removeAValueInAListNode(5);
-        sll.printLinkedList(); 
+        sll.printLinkedList();
         System.out.println(sll.detectLoop(sll.head));
         System.out.println(sll.detectLoop(sll.createALoopList()));
-       
-
-        
+        sll.removeLoopByPointingLastNodeToNull();
+        sll.printLinkedList();
+        System.out.println(sll.detectLoop(sll.head));
     }
 
     // singly linked list
@@ -64,15 +64,16 @@ public class SinglyLinkedList {
         head = newListNode;
 
     }
-    //inserting at the end of the sll
-    public void insertAtTheEnd(int value){
+
+    // inserting at the end of the sll
+    public void insertAtTheEnd(int value) {
         ListNode newListNode = new ListNode(value);
-        if (head==null) {
+        if (head == null) {
             head = newListNode;
             return;
         }
         ListNode currentNode = head;
-        while (null!= currentNode.next) {
+        while (null != currentNode.next) {
             currentNode = currentNode.next;
         }
         currentNode.next = newListNode;
@@ -80,29 +81,29 @@ public class SinglyLinkedList {
 
     // inserting at a given position
     /*
-     * Q. implement method to insert a node at a given position. Assuming to be valid and starting from 1.
+     * Q. implement method to insert a node at a given position. Assuming to be
+     * valid and starting from 1.
      */
-    public void insert(int position, int value){
+    public void insert(int position, int value) {
         ListNode node = new ListNode(value);
         if (position == 1) {
             node.next = head;
             head = node;
-        }else{
+        } else {
             ListNode previous = head;
             int count = 1;
-            while (count<position-1) {
+            while (count < position - 1) {
                 previous = previous.next;
                 count++;
             }
-            ListNode currentListNode =previous.next;
+            ListNode currentListNode = previous.next;
             previous.next = node;
             node.next = currentListNode;
         }
     }
 
-
     // deleting first Node of a sll
-    public ListNode deleteFirstNode(){
+    public ListNode deleteFirstNode() {
         if (head == null) {
             return null;
         }
@@ -113,14 +114,14 @@ public class SinglyLinkedList {
     }
 
     // deleting last node in a sll
-    public ListNode deleteLastNode(){
-        if (head==null || head.next==null) {
+    public ListNode deleteLastNode() {
+        if (head == null || head.next == null) {
             return head;
         }
         ListNode current = head;
         ListNode previus = null;
-        while (current.next!=null) {
-            previus= current;
+        while (current.next != null) {
+            previus = current;
             current = current.next;
         }
         previus.next = null;
@@ -132,13 +133,13 @@ public class SinglyLinkedList {
      * Q. Implement method to delete a node at a given position. Assuming position
      * to be valid and starting from 1
      */
-    public void deleteNodeInAPosition(int position){
-        if (position==1) {
+    public void deleteNodeInAPosition(int position) {
+        if (position == 1) {
             head = head.next;
-        }else{
+        } else {
             ListNode previous = head;
             int count = 0;
-            while (count<position-1) {
+            while (count < position - 1) {
                 previous = previous.next;
                 count++;
             }
@@ -148,7 +149,7 @@ public class SinglyLinkedList {
     }
 
     // searching an element in a linked list
-    public boolean isValuPresent(int searchKey){
+    public boolean isValuPresent(int searchKey) {
         ListNode current = head;
         while (current != null) {
             if (current.data == searchKey) {
@@ -159,13 +160,12 @@ public class SinglyLinkedList {
         return false;
     }
 
-
     // reversing sll
-    public ListNode reverseSll(){
+    public ListNode reverseSll() {
         ListNode current = head;
         ListNode previous = null;
-        ListNode next= null;
-        while (current!= null) {
+        ListNode next = null;
+        while (current != null) {
             next = current.next;
             current.next = previous;
             previous = next;
@@ -175,26 +175,26 @@ public class SinglyLinkedList {
     }
 
     // finding the nth node from the end of the linked list
-    public ListNode getNthValueFromEnd(int n){
+    public ListNode getNthValueFromEnd(int n) {
         if (head == null) {
             return null;
         }
-        if (n<= 0) {
+        if (n <= 0) {
             throw new IllegalArgumentException("Invalid value of n");
         }
         ListNode mainPtr = head;
         ListNode refPtr = head;
         int count = 0;
 
-        while (count<n) {
+        while (count < n) {
             if (refPtr == null) {
-                throw new IllegalArgumentException(n+" is greather than number of nodes in the list");
+                throw new IllegalArgumentException(n + " is greather than number of nodes in the list");
             }
             refPtr = refPtr.next;
             count++;
-            
+
         }
-        while (refPtr!= null) {
+        while (refPtr != null) {
             refPtr = refPtr.next;
             mainPtr = mainPtr.next;
         }
@@ -204,15 +204,15 @@ public class SinglyLinkedList {
     // how to remove duplicates from sorted linked list
     /*
      * Example
-     * head = 1 --> 1 --> 2 --> 4 --> 8 --> 8 --> 9 
+     * head = 1 --> 1 --> 2 --> 4 --> 8 --> 8 --> 9
      * output = 1 --> 2 --> 4 --> 8 --> 9
      */
-    public void removeSortedDuplicate(){
+    public void removeSortedDuplicate() {
         ListNode current = head;
         while (current != null && current.next != null) {
-            if (current.data ==current.next.data) {
+            if (current.data == current.next.data) {
                 current.next = current.next.next;
-            }else{
+            } else {
                 current = current.next;
             }
         }
@@ -222,15 +222,15 @@ public class SinglyLinkedList {
     // adding a node in a sorded list
     /*
      * Example
-     * head = 1 --> 1 --> 2 --> 4 --> 8 --> 9 
+     * head = 1 --> 1 --> 2 --> 4 --> 8 --> 9
      * newNode = 6
-     * output =  1 --> 1 --> 2 --> 4 --> 6 --> 8 --> 9 
+     * output = 1 --> 1 --> 2 --> 4 --> 6 --> 8 --> 9
      */
-    public void addInASortedList(int value){
+    public void addInASortedList(int value) {
         ListNode newNode = new ListNode(value);
         ListNode current = head;
         ListNode temp = null;
-        while (current!=null && current.data < newNode.data) {
+        while (current != null && current.data < newNode.data) {
             temp = current;
             current = current.next;
         }
@@ -245,11 +245,15 @@ public class SinglyLinkedList {
      * value = 5
      * Output = 2--> 7--> 8--> 9--> null
      */
-    public ListNode removeAValueInAListNode(int value){
+    public ListNode removeAValueInAListNode(int value) {
         ListNode current = head;
         ListNode temp = null;
+        if (current != null && current.data == value) {
+            head = current.next;
+            return head;
+        }
         while (current != null && current.data != value) {
-            temp= current;
+            temp = current;
             current = current.next;
         }
         if (current == null) {
@@ -259,7 +263,6 @@ public class SinglyLinkedList {
         return head;
 
     }
-
 
     // how to detect a loop of a listnode
     /*
@@ -273,10 +276,10 @@ public class SinglyLinkedList {
      * output = false
      */
 
-     public boolean detectLoop(ListNode hd){
+    public boolean detectLoop(ListNode hd) {
         ListNode fastPointer = hd;
         ListNode slowPointer = hd;
-        while (fastPointer!=null && fastPointer.next != null) {
+        while (fastPointer != null && fastPointer.next != null) {
             fastPointer = fastPointer.next.next;
             slowPointer = slowPointer.next;
             if (slowPointer == fastPointer) {
@@ -284,9 +287,9 @@ public class SinglyLinkedList {
             }
         }
         return false;
-     }
+    }
 
-     public ListNode createALoopList(){
+    public ListNode createALoopList() {
         ListNode first = new ListNode(1);
         ListNode second = new ListNode(4);
         ListNode third = new ListNode(18);
@@ -299,6 +302,52 @@ public class SinglyLinkedList {
         forth.next = fifth;
         fifth.next = third;
         return head;
-     }
-}
+    }
+    // floyd's cycle detection algoryth
 
+    // finding the start of the loop
+    public ListNode detectingStartingPointOfALoop(ListNode cycle) {
+        ListNode fastPointer = cycle;
+        ListNode slowPointer = cycle;
+        while (fastPointer != null && fastPointer.next != null) {
+            fastPointer = fastPointer.next.next;
+            slowPointer = slowPointer.next;
+            if (slowPointer == fastPointer) {
+                return getStartingNode(slowPointer, cycle);
+            }
+        }
+        return null;
+    }
+
+    private ListNode getStartingNode(ListNode slowPointer, ListNode cycle) {
+        ListNode temp = cycle;
+        while (slowPointer != temp) {
+            temp = temp.next;
+            slowPointer = slowPointer.next;
+        }
+        return temp;
+    }
+
+    // removing the end of the loop to point null
+    private void removeLoopByPointingLastNodeToNull() {
+        ListNode fastPointer = head;
+        ListNode slowPointer = head;
+        while (fastPointer != null && fastPointer.next != null) {
+            fastPointer = fastPointer.next.next;
+            slowPointer = slowPointer.next;
+            if (slowPointer == fastPointer) {
+                removeloop(slowPointer);
+            }
+        }
+    }
+
+    private void removeloop(ListNode slowPointer) {
+        ListNode temp = head;
+        while (slowPointer.next != temp.next) {
+            temp = temp.next;
+            slowPointer = slowPointer.next;
+        }
+        slowPointer.next = null;
+    }
+
+}
