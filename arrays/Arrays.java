@@ -25,7 +25,6 @@ public class Arrays {
 
     // printing arrays
     public  void printArray(int[] args){
-        int n = args.length;
         for (int arg : args) {
             System.out.print(arg + " ");
         }

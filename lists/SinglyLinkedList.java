@@ -6,23 +6,31 @@ public class SinglyLinkedList {
     public static void main(String[] args) {
         SinglyLinkedList sll = new SinglyLinkedList();
         sll.insertAtTheEnd(2);
-        sll.insertAtTheEnd(2);
-        sll.insertAtTheEnd(5);
-        sll.insertAtTheEnd(7);
-        sll.insertAtTheEnd(9);
-        sll.insertAtTheEnd(9);
+        sll.insertAtTheEnd(4);
+        sll.insertAtTheEnd(6);
 
-        sll.removeSortedDuplicate();
+        SinglyLinkedList sll2 = new SinglyLinkedList();
+        sll2.insertAtTheEnd(1);
+        sll2.insertAtTheEnd(7);
+        sll2.insertAtTheEnd(4);
+        // sll.removeSortedDuplicate();
+        // sll.printLinkedList();
+        // sll.addInASortedList(8);
+        // sll.printLinkedList();
+        // sll.removeAValueInAListNode(5);
+        // sll.printLinkedList();
+        // System.out.println(sll.detectLoop(sll.head));
+        // System.out.println(sll.detectLoop(sll.createALoopList()));
+        // sll.removeLoopByPointingLastNodeToNull();
+        // sll.printLinkedList();
+        // System.out.println(sll.detectLoop(sll.head));
+
+        // mergeSortedList(sll.head, sll2.head);
+        // sll.printLinkedList();
+
+
+        addingTwoReversedListNode(sll.head,sll2.head);
         sll.printLinkedList();
-        sll.addInASortedList(8);
-        sll.printLinkedList();
-        sll.removeAValueInAListNode(5);
-        sll.printLinkedList();
-        System.out.println(sll.detectLoop(sll.head));
-        System.out.println(sll.detectLoop(sll.createALoopList()));
-        sll.removeLoopByPointingLastNodeToNull();
-        sll.printLinkedList();
-        System.out.println(sll.detectLoop(sll.head));
     }
 
     // singly linked list
@@ -340,7 +348,6 @@ public class SinglyLinkedList {
             }
         }
     }
-
     private void removeloop(ListNode slowPointer) {
         ListNode temp = head;
         while (slowPointer.next != temp.next) {
@@ -348,6 +355,71 @@ public class SinglyLinkedList {
             slowPointer = slowPointer.next;
         }
         slowPointer.next = null;
+    }
+
+    // merging two sorted linkedlist
+    /*
+     * Given two sorted singly linked list, merge them so that the resulting singly linked list is also sorted
+     * 
+     * Example
+     * input1: head1 ---> 1 ---> 4 ---> 8 ---> null
+     * input2: head2 ---> 3 ---> 6 ---> 7 ---> null
+     * 
+     * output: head --> 1 ---> 3 ---> 4 ---> 6 ---> 7 ---> 8 ---> null
+     */
+    public static ListNode mergeSortedList(ListNode a, ListNode b){
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        while (a!= null && b!= null) {
+            if (a.data <= b.data) {
+                tail.next = a;
+                a = a.next;
+            }else{
+                tail.next = b;
+                b = b.next;
+            }
+            tail = tail.next;
+        }
+        if (a == null) {
+            tail.next = b;
+        }else{
+            tail.next = a;
+        }
+        return dummy.next;
+    }
+
+    // adding two singly linked list
+    /*
+     * Given two non-empty linked list representing two non-negative integers.
+     * The digits are stored in reverse order and each of their nodes contains a single digit.
+     * Add the two numbers and return the sum as linked list.
+     * You may assume the two numbers do not contain any leading zero, except the number zero itself
+     * 
+     * 
+     * Example:
+     * input: Node a ---> 3 ---> 4 ---> 3 ---> null
+     * input: Node b ---> 5 ---> 6 ---> 4 ---> null
+     * 
+     * output: ---> 8 ---> 0 ---> 8 ---> null
+     * 
+     * Explanation 343 + 465 == 808  we are reading numbers from the end since the list is reversed
+     */
+    public static ListNode addingTwoReversedListNode(ListNode a,ListNode b){
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        int carry = 0;
+        while (a!=null || b != null) {
+            int x = (a!= null)? a.data : 0;
+            int y = (b!= null)? b.data: 0;
+            int sum = x+y+carry;
+            carry = sum/10;
+            tail.next = new ListNode(sum%10);
+            tail = tail.next;
+            if (a!= null) a= a.next;
+            if (b!= null) b = b.next;
+        }
+        if (carry>0) tail.next = new ListNode(carry);
+        return dummy.next;
     }
 
 }
